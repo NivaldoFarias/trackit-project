@@ -3,9 +3,8 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 60px;
 
   padding: 90px 36px;
   height: 100vh;
@@ -17,13 +16,13 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 25px;
 
     height: fit-content;
     width: 100%;
 
     img {
-      width: 40%;
+      width: 150px;
     }
     figcaption {
       font-family: "Playball", cursive;

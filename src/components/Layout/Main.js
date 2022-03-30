@@ -65,6 +65,11 @@ const Main = styled.main`
     }
   }
   .habit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
     padding: 18px;
     height: 180px;
     width: 100%;
@@ -88,6 +93,73 @@ const Main = styled.main`
       label {
         font-size: 1.1em;
         color: lightgrey;
+      }
+    }
+    .checkboxes-container {
+      position: relative;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      padding-right: 3px;
+      width: 100%;
+    }
+    .checkbox {
+      position: relative;
+
+      input {
+        height: 30px;
+        width: 30px;
+      }
+      label {
+        position: absolute;
+        top: 7px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+
+        pointer-events: none;
+      }
+    }
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 50px;
+      width: 100%;
+
+      #cancel-btn {
+        align-self: center;
+        margin-top: 20px;
+
+        font-size: 1em;
+        letter-spacing: 3px;
+        text-align: center;
+        text-transform: uppercase;
+
+        cursor: pointer;
+        border-style: none;
+        background-color: inherit;
+        transition: all 200ms ease-in-out 0s;
+      }
+      #save-btn {
+        align-self: center;
+        margin-top: 20px;
+
+        font-size: 1.1em;
+        letter-spacing: 3px;
+        text-align: center;
+        text-transform: uppercase;
+
+        cursor: pointer;
+        border-style: none;
+        background-color: inherit;
+        transition: all 200ms ease-in-out 0s;
       }
     }
   }

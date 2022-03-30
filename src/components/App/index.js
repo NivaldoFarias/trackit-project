@@ -18,7 +18,6 @@ const GlobalStyle = createGlobalStyle`
     cursor: default;
     -ms-overflow-style: none; /* for IE, Edge */
     scrollbar-width: none; /* for Firefox */
-    appearance: none;
     transition: all 200ms ease-in-out 0s;
   }
   ::-webkit-scrollbar {

@@ -24,19 +24,26 @@ const URLS = {
   POST_CREATE_HABIT:
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
 };
+const value = 0.76;
 
 function Habits() {
-  const [inputData, setInputData] = useState({
-    name: "",
-    description: "",
+  const [inputData, setInputData] = useState("");
+  const [checkboxData, setCheckboxData] = useState({
+    sunday: false,
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
   });
+  const navigate = useNavigate();
+
   const {
     user: { id, name, image, email, password },
   } = useContext(UserContext);
   const { token } = useContext(TokenContext);
   const { habitsData, setHabitsData } = useContext(HabitsContext);
-  const navigate = useNavigate();
-  const value = 0.76;
 
   /* useEffect(() => {
     const promise = axios.get(URLS.GET_HABITS);
@@ -57,18 +64,16 @@ function Habits() {
     );
   }
 
-  function handleInputChange(e) {
-    setInputData({ ...inputData, [e.target.name]: e.target.value });
-  }
-  function handleCheckboxChange(e) {
-    e.preventDefault();
-    setInputData({
-      ...inputData,
-      days: { ...inputData.days, [e.target.name]: !e.target.value },
-    });
-  }
-
   function buildHabits() {
+    const Checkbox = ({ label, value, onChange }) => {
+      return (
+        <div className="checkbox">
+          <label>{label}</label>
+          <input type="checkbox" checked={value} onChange={onChange} />
+        </div>
+      );
+    };
+
     return (
       <>
         <section className="my-habits">
@@ -81,15 +86,105 @@ function Habits() {
           <InputGroup className="habit__name">
             <input
               type="text"
-              value={inputData.name}
+              value={inputData || ""}
               name="name"
-              onChange={handleInputChange}
+              onChange={(e) => setInputData(e.target.value)}
               required
             />
             <span className="highlight"></span>
             <span className="bar"></span>
             <label>nome do hábito</label>
           </InputGroup>
+          <div className="checkboxes-container">
+            <Checkbox
+              label="D"
+              name="sunday"
+              value={checkboxData.sunday || false}
+              onChange={(e) => {
+                e.preventDefault();
+                setCheckboxData({
+                  ...checkboxData,
+                  sunday: !checkboxData.sunday,
+                });
+              }}
+            />
+            <Checkbox
+              label="S"
+              name="monday"
+              value={checkboxData.monday || false}
+              onChange={(e) => {
+                e.preventDefault();
+                setCheckboxData({
+                  ...checkboxData,
+                  monday: !checkboxData.monday,
+                });
+              }}
+            />
+            <Checkbox
+              label="T"
+              name="tuesday"
+              value={checkboxData.tuesday || false}
+              onChange={(e) => {
+                e.preventDefault();
+                setCheckboxData({
+                  ...checkboxData,
+                  tuesday: !checkboxData.tuesday,
+                });
+              }}
+            />
+            <Checkbox
+              label="Q"
+              name="wednesday"
+              value={checkboxData.wednesday || false}
+              onChange={(e) => {
+                e.preventDefault();
+                setCheckboxData({
+                  ...checkboxData,
+                  wednesday: !checkboxData.wednesday,
+                });
+              }}
+            />
+            <Checkbox
+              label="Q"
+              name="thursday"
+              value={checkboxData.thursday || false}
+              onChange={(e) => {
+                e.preventDefault();
+                setCheckboxData({
+                  ...checkboxData,
+                  thursday: !checkboxData.thursday,
+                });
+              }}
+            />
+            <Checkbox
+              label="S"
+              name="friday"
+              value={checkboxData.friday || false}
+              onChange={(e) => {
+                e.preventDefault();
+                setCheckboxData({
+                  ...checkboxData,
+                  friday: !checkboxData.friday,
+                });
+              }}
+            />
+            <Checkbox
+              label="S"
+              name="saturday"
+              value={checkboxData.saturday || false}
+              onChange={(e) => {
+                e.preventDefault();
+                setCheckboxData({
+                  ...checkboxData,
+                  saturday: !checkboxData.saturday,
+                });
+              }}
+            />
+          </div>
+          <div className="btn-container">
+            <button id="cancel-btn">Cancelar</button>
+            <button id="save-btn">Salvar</button>
+          </div>
         </article>
         <p className="no-habits-alert">
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
@@ -117,7 +212,7 @@ function Habits() {
             styles={buildStyles({
               textSize: "20px",
               textColor: "white",
-              pathColor: `rgba(250, 126, 97, 0.9)`,
+              pathColor: `rgb(253, 235, 220)`,
               trailColor: "rgb(76, 30, 79)",
               backgroundColor: `rgb(76, 30, 79)`,
             })}
