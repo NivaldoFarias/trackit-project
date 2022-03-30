@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none !important;
     font-family: 'Lexend Deca', sans-serif;
     letter-spacing: 1px;
+    font-weight: 300;
     cursor: default;
     -ms-overflow-style: none; /* for IE, Edge */
     scrollbar-width: none; /* for Firefox */
@@ -30,6 +31,11 @@ const GlobalStyle = createGlobalStyle`
   *.disabled {
     opacity: 0.4;
     pointer-events: none;
+  }
+  div.root {
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
   }
 `;
 

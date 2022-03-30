@@ -3,9 +3,9 @@ import { useState } from "react";
 import axios from "axios";
 
 import logo from "./../../assets/images/logo.png";
-import Container from "./../Layout/Container";
-import InputGroup from "./../Layout/InputGroup";
-import StyledLink from "./../Layout/StyledLink";
+import Container from "../Layout/Container.js";
+import InputGroup from "../Layout/InputGroup.js";
+import StyledLink from "./../Layout/StyledLink.js";
 
 function SignUp() {
   const [formData, setFormData] = useState({

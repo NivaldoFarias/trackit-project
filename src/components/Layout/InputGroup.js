@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const InputGroup = styled.div`
   position: relative;
-  font-family: Lexend Deca, cursive;
+  font-family: "Lexend Deca", sans-serif;
 
   input {
     display: block;
