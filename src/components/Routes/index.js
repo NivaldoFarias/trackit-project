@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components";
 import UserContext from "./../../contexts/UserContext";
 import TokenContext from "./../../contexts/TokenContext";
 import Login from "./Login";
+import SignUp from "./Singup.jsx";
 
 export default function Wrapper() {
   const [token, setToken] = useState("");
@@ -18,6 +19,7 @@ export default function Wrapper() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
             </Routes>
           </BrowserRouter>
         </UserContext.Provider>
