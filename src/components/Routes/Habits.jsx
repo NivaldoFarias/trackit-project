@@ -13,6 +13,7 @@ import objToArr from "../../utils/objToArr.js";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import ListHabits from "./ListHabits";
 
 const URLS = {
   GET_HABITS:
@@ -28,7 +29,7 @@ const URLS = {
 function Habits() {
   const navigate = useNavigate();
   const { token } = useContext(TokenContext);
-  const { habitsData, setHabitsData } = useContext(HabitsContext);
+  const { setHabitsData } = useContext(HabitsContext);
   const CONFIG = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -36,18 +37,6 @@ function Habits() {
   };
 
   const [reloadList, setReloadList] = useState(false);
-
-  useEffect(() => {
-    const request = axios.get(URLS.GET_HABITS, CONFIG);
-
-    request.then((response) => {
-      if (response.data.length > 0) setHabitsData(response.data);
-      console.log(response.data);
-    });
-    request.catch((error) => console.log(error.response));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reloadList]);
-
   const [inputData, setInputData] = useState("");
   const [checkboxData, setCheckboxData] = useState({
     sunday: false,
@@ -61,6 +50,17 @@ function Habits() {
   const [btnClick, setBtnClick] = useState(false);
   const [cancelBtn, setCancelBtn] = useState("inactive");
   const [saveHabitBtn, setSaveHabitBtn] = useState(false);
+
+  useEffect(() => {
+    const request = axios.get(URLS.GET_HABITS, CONFIG);
+
+    request.then((response) => {
+      if (response.data.length > 0) setHabitsData(response.data);
+      console.log(response.data);
+    });
+    request.catch((error) => console.log(error.response));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reloadList]);
 
   function buildHabits() {
     const Checkbox = ({ label, value, onChange }) => {
@@ -76,66 +76,6 @@ function Habits() {
 
     if (btnClick && cancelBtn === "clicked") {
       resetAll();
-    }
-
-    function UserHabit(props) {
-      const { habit } = props;
-
-      function deleteHabit(habit) {
-        const newHabits = habitsData.filter((item) => item.id !== habit.id);
-        setHabitsData(newHabits);
-
-        const request = axios.delete(
-          `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`,
-          CONFIG
-        );
-        request.then((response) => {
-          console.log(response.data, "habit deleted");
-          setReloadList(!reloadList);
-        });
-        request.catch((err) => console.log(err.response));
-      }
-
-      return (
-        <article className="habit">
-          <div className="habit__name">
-            <h3>{habit.name}</h3>
-            <span className="habit__delete" onClick={() => deleteHabit(habit)}>
-              <ion-icon name="trash-outline"></ion-icon>
-            </span>
-          </div>
-          <div className="habit__days">
-            <span className="habit__day">
-              <ion-icon name="sunny-outline"></ion-icon>
-              <p>D</p>
-            </span>
-            <span className="habit__day">
-              <ion-icon name="sunny-outline"></ion-icon>
-              <p>S</p>
-            </span>
-            <span className="habit__day">
-              <ion-icon name="sunny-outline"></ion-icon>
-              <p>T</p>
-            </span>
-            <span className="habit__day">
-              <ion-icon name="sunny-outline"></ion-icon>
-              <p>Q</p>
-            </span>
-            <span className="habit__day">
-              <ion-icon name="sunny-outline"></ion-icon>
-              <p>Q</p>
-            </span>
-            <span className="habit__day">
-              <ion-icon name="sunny-outline"></ion-icon>
-              <p>S</p>
-            </span>
-            <span className="habit__day">
-              <ion-icon name="sunny-outline"></ion-icon>
-              <p>S</p>
-            </span>
-          </div>
-        </article>
-      );
     }
 
     return (
@@ -159,6 +99,7 @@ function Habits() {
             <input
               type="text"
               autoComplete="off"
+              maxLength={25}
               value={inputData || ""}
               name="name"
               onChange={(e) => setInputData(e.target.value)}
@@ -268,18 +209,7 @@ function Habits() {
             </button>
           </div>
         </article>
-        {habitsData?.length > 0 ? (
-          habitsData.map((habit) => {
-            return <UserHabit key={habit.id} habit={habit} />;
-          })
-        ) : (
-          <>
-            <p className="no-habits-alert">
-              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
-              para começar a registrar!
-            </p>
-          </>
-        )}
+        <ListHabits />
       </>
     );
 
