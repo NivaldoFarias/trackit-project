@@ -26,6 +26,7 @@ const URLS = {
   POST_CREATE_HABIT:
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
 };
+
 const value = 0.76;
 
 function Habits() {
@@ -36,16 +37,24 @@ function Habits() {
   } = useContext(UserContext);
   const { token } = useContext(TokenContext);
   const { habitsData, setHabitsData } = useContext(HabitsContext);
+  const CONFIG = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
-  /* useEffect(() => {
-    const promise = axios.get(URLS.GET_HABITS);
+  const [reloadList, setReloadList] = useState(false);
 
-    promise.then((response) => {
+  useEffect(() => {
+    const request = axios.get(URLS.GET_HABITS, CONFIG);
+
+    request.then((response) => {
       if (response.data.length > 0) setHabitsData(response.data);
       console.log(response.data);
     });
+    request.catch((error) => console.log(error.response));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); */
+  }, [reloadList]);
 
   function buildHeader() {
     return (
@@ -87,30 +96,28 @@ function Habits() {
     }
 
     function UserHabit(props) {
+      const { habit } = props;
+
       function deleteHabit(habit) {
         const newHabits = habitsData.filter((item) => item.id !== habit.id);
         setHabitsData(newHabits);
 
         const request = axios.delete(
           `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          CONFIG
         );
-        request.then((response) => console.log(response.data, "habit deleted"));
+        request.then((response) => {
+          console.log(response.data, "habit deleted");
+          setReloadList(!reloadList);
+        });
         request.catch((err) => console.log(err.response));
       }
 
       return (
         <article className="habit">
           <div className="habit__name">
-            <h3>{props.habit.name}</h3>
-            <span
-              className="habit__delete"
-              onClick={() => deleteHabit(props.habit)}
-            >
+            <h3>{habit.name}</h3>
+            <span className="habit__delete" onClick={() => deleteHabit(habit)}>
               <ion-icon name="trash-outline"></ion-icon>
             </span>
           </div>
@@ -324,15 +331,13 @@ function Habits() {
 
     function handlePostHabit() {
       const body = { name: inputData, days: objToArr(checkboxData) };
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
 
-      const request = axios.post(URLS.POST_CREATE_HABIT, body, config);
+      const request = axios.post(URLS.POST_CREATE_HABIT, body, CONFIG);
 
-      request.then((response) => console.log(response));
+      request.then((response) => {
+        console.log(response);
+        setReloadList(!reloadList);
+      });
       request.catch((error) => console.log(error.response));
     }
 
