@@ -1,17 +1,19 @@
 import React, { useContext } from "react";
-import Header from "./../Layout/Header";
+import StyledHeader from "../Layout/Header";
 
-import UserContext from "./../../contexts/UserContext";
+import UserContext from "./../../hooks/UserContext";
 
-export function StyledHeader() {
+function Header() {
   const {
     user: { image },
   } = useContext(UserContext);
 
   return (
-    <Header>
+    <StyledHeader>
       <h1>Trackit</h1>
       <img src={image} alt="user avatar miniature" />
-    </Header>
+    </StyledHeader>
   );
 }
+
+export default Header;

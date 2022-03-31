@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Header = styled.header`
+const StyledHeader = styled.header`
   position: fixed;
   z-index: 1;
   top: 0;
@@ -29,4 +29,4 @@ const Header = styled.header`
   }
 `;
 
-export default Header;
+export default StyledHeader;

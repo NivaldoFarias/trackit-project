@@ -1,20 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import UserContext from "../../hooks/UserContext";
 import TokenContext from "../../hooks/TokenContext";
 import HabitsContext from "../../hooks/HabitsContext";
 
-import Header from "./../Layout/Header.js";
-import Footer from "../Layout/Footer.js";
 import Main from "./../Layout/Main.js";
 import InputGroup from "../Layout/InputGroup.js";
 import LoadingDots from "./../Layout/LoadingDots.js";
 
 import objToArr from "../../utils/objToArr.js";
+
+import Header from "./Header";
+import Footer from "./Footer";
 
 const URLS = {
   GET_HABITS:
@@ -27,14 +25,8 @@ const URLS = {
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
 };
 
-const value = 0.76;
-
 function Habits() {
   const navigate = useNavigate();
-
-  const {
-    user: { id, name, image, email, password },
-  } = useContext(UserContext);
   const { token } = useContext(TokenContext);
   const { habitsData, setHabitsData } = useContext(HabitsContext);
   const CONFIG = {
@@ -55,15 +47,6 @@ function Habits() {
     request.catch((error) => console.log(error.response));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reloadList]);
-
-  function buildHeader() {
-    return (
-      <>
-        <h1>Trackit</h1>
-        <img src={image} alt="user avatar miniature" />
-      </>
-    );
-  }
 
   const [inputData, setInputData] = useState("");
   const [checkboxData, setCheckboxData] = useState({
@@ -357,43 +340,13 @@ function Habits() {
     }
   }
 
-  function buildFooter() {
-    return (
-      <>
-        <div className="text-container">
-          <p>Hábitos</p>
-          <p>Histórico</p>
-        </div>
-        <div className="progressbar-container">
-          <CircularProgressbar
-            value={value}
-            text={`Hoje`}
-            maxValue={1}
-            strokeWidth={5}
-            background
-            backgroundPadding={7}
-            styles={buildStyles({
-              textSize: "20px",
-              textColor: "white",
-              pathColor: `rgb(253, 235, 220)`,
-              trailColor: "rgb(76, 30, 79)",
-              backgroundColor: `rgb(76, 30, 79)`,
-            })}
-          />
-        </div>
-      </>
-    );
-  }
-
-  const header = buildHeader();
   const habits = buildHabits();
-  const footer = buildFooter();
 
   return (
     <>
-      <Header>{header}</Header>
+      <Header />
       <Main>{habits}</Main>
-      <Footer>{footer}</Footer>
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Footer = styled.footer`
+const StyledFooter = styled.footer`
   position: fixed;
   z-index: 1;
   bottom: -13px;
@@ -39,13 +39,13 @@ const Footer = styled.footer`
     right: 0;
     left: 0;
     bottom: 20px;
-    margin: 0 auto;
-    text-align: center;
-    user-select: none;
 
+    margin: 0 auto;
     width: 100px;
     height: 100px;
+
+    user-select: none;
   }
 `;
 
-export default Footer;
+export default StyledFooter;
