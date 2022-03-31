@@ -69,7 +69,7 @@ const Main = styled.main`
       }
     }
   }
-  .habit {
+  .create-habit {
     position: relative;
     left: 0px;
     top: 0px;
@@ -89,13 +89,14 @@ const Main = styled.main`
     transition: all 250ms ease-out 0s;
 
     &.collapsed {
+      padding: 0px;
       height: 0;
       left: 5px;
       top: 5px;
       background-color: transparent;
       box-shadow: transparent 0px 0px 0px 0px;
       * {
-        display: none;
+        display: none !important;
       }
     }
     &__name {
@@ -185,15 +186,15 @@ const Main = styled.main`
         transition: all 200ms ease-in-out 0s;
       }
       #save-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         align-self: center;
         margin-top: 15px;
-        padding: 6px 15px;
 
-        color: white;
-        font-size: 1.1em;
-        letter-spacing: 3px;
-        text-align: center;
-        text-transform: uppercase;
+        height: 30px;
+        width: 110px;
 
         user-select: none;
         cursor: pointer;
@@ -201,6 +202,15 @@ const Main = styled.main`
         border-radius: 5px;
         background-color: ${(props) => props.theme.colors.primary};
         transition: all 200ms ease-in-out 0s;
+
+        p {
+          color: white;
+          font-size: 1.2em;
+          letter-spacing: 3px;
+          text-align: center;
+          text-transform: uppercase;
+          pointer-events: none;
+        }
       }
     }
   }

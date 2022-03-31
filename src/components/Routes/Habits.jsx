@@ -12,7 +12,9 @@ import Header from "./../Layout/Header.js";
 import Footer from "../Layout/Footer.js";
 import Main from "./../Layout/Main.js";
 import InputGroup from "../Layout/InputGroup.js";
-import Checkbox from "../Layout/Checkbox.js";
+import LoadingDots from "./../Layout/LoadingDots.js";
+
+import objToArr from "../../utils/objToArr.js";
 
 const URLS = {
   GET_HABITS:
@@ -66,6 +68,7 @@ function Habits() {
   });
   const [btnClick, setBtnClick] = useState(false);
   const [cancelBtn, setCancelBtn] = useState("inactive");
+  const [saveHabitBtn, setSaveHabitBtn] = useState(false);
 
   function buildHabits() {
     const Checkbox = ({ label, value, onChange }) => {
@@ -79,36 +82,70 @@ function Habits() {
       );
     };
 
-    function enableSaveBtn() {
-      return inputData.length > 0 &&
-        (checkboxData.sunday ||
-          checkboxData.monday ||
-          checkboxData.tuesday ||
-          checkboxData.wednesday ||
-          checkboxData.thursday ||
-          checkboxData.friday ||
-          checkboxData.saturday)
-        ? ""
-        : "disabled";
-    }
-
-    function enableCreateBtn() {
-      return btnClick ? "add-habit-btn clicked" : "add-habit-btn";
-    }
-
     if (btnClick && cancelBtn === "clicked") {
-      setBtnClick(false);
-      setCancelBtn("inactive");
-      setInputData("");
-      setCheckboxData({
-        sunday: false,
-        monday: false,
-        tuesday: false,
-        wednesday: false,
-        thursday: false,
-        friday: false,
-        saturday: false,
-      });
+      resetAll();
+    }
+
+    function UserHabit(props) {
+      function deleteHabit(habit) {
+        const newHabits = habitsData.filter((item) => item.id !== habit.id);
+        setHabitsData(newHabits);
+
+        const request = axios.delete(
+          `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        request.then((response) => console.log(response.data, "habit deleted"));
+        request.catch((err) => console.log(err.response));
+      }
+
+      return (
+        <article className="habit">
+          <div className="habit__name">
+            <h3>{props.habit.name}</h3>
+            <span
+              className="habit__delete"
+              onClick={() => deleteHabit(props.habit)}
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+            </span>
+          </div>
+          <div className="habit__days">
+            <span className="habit__day">
+              <ion-icon name="sunny-outline"></ion-icon>
+              <p>D</p>
+            </span>
+            <span className="habit__day">
+              <ion-icon name="sunny-outline"></ion-icon>
+              <p>S</p>
+            </span>
+            <span className="habit__day">
+              <ion-icon name="sunny-outline"></ion-icon>
+              <p>T</p>
+            </span>
+            <span className="habit__day">
+              <ion-icon name="sunny-outline"></ion-icon>
+              <p>Q</p>
+            </span>
+            <span className="habit__day">
+              <ion-icon name="sunny-outline"></ion-icon>
+              <p>Q</p>
+            </span>
+            <span className="habit__day">
+              <ion-icon name="sunny-outline"></ion-icon>
+              <p>S</p>
+            </span>
+            <span className="habit__day">
+              <ion-icon name="sunny-outline"></ion-icon>
+              <p>S</p>
+            </span>
+          </div>
+        </article>
+      );
     }
 
     return (
@@ -125,8 +162,10 @@ function Habits() {
             <ion-icon name="add-outline"></ion-icon>
           </div>
         </section>
-        <article className={btnClick ? "habit" : "habit collapsed"}>
-          <InputGroup className="habit__name">
+        <article
+          className={btnClick ? "create-habit" : "create-habit collapsed"}
+        >
+          <InputGroup className="create-habit__name">
             <input
               type="text"
               autoComplete="off"
@@ -229,17 +268,88 @@ function Habits() {
             <button id="cancel-btn" onClick={(e) => setCancelBtn("clicked")}>
               Cancelar
             </button>
-            <button id="save-btn" className={enableSaveBtn()}>
-              Salvar
+            <button
+              id="save-btn"
+              className={enableSaveBtn()}
+              onClick={handleSaveHabit}
+            >
+              <p>Salvar</p>
+              <LoadingDots className="dot-pulse hidden"></LoadingDots>
             </button>
           </div>
         </article>
-        <p className="no-habits-alert">
-          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
-          começar a trackear!
-        </p>
+        {habitsData?.length > 0 ? (
+          habitsData.map((habit) => {
+            return <UserHabit key={habit.id} habit={habit} />;
+          })
+        ) : (
+          <>
+            <p className="no-habits-alert">
+              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
+              para começar a registrar!
+            </p>
+          </>
+        )}
       </>
     );
+
+    function enableSaveBtn() {
+      return inputData.length > 0 &&
+        (checkboxData.sunday ||
+          checkboxData.monday ||
+          checkboxData.tuesday ||
+          checkboxData.wednesday ||
+          checkboxData.thursday ||
+          checkboxData.friday ||
+          checkboxData.saturday)
+        ? ""
+        : "disabled";
+    }
+
+    function enableCreateBtn() {
+      return btnClick ? "add-habit-btn clicked" : "add-habit-btn";
+    }
+
+    function handleSaveHabit() {
+      setSaveHabitBtn(!saveHabitBtn);
+      resetAll();
+      handlePostHabit();
+      console.log({
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: { name: inputData, days: objToArr(checkboxData) },
+      });
+    }
+
+    function handlePostHabit() {
+      const body = { name: inputData, days: objToArr(checkboxData) };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const request = axios.post(URLS.POST_CREATE_HABIT, body, config);
+
+      request.then((response) => console.log(response));
+      request.catch((error) => console.log(error.response));
+    }
+
+    function resetAll() {
+      setBtnClick(false);
+      setCancelBtn("inactive");
+      setInputData("");
+      setCheckboxData({
+        sunday: false,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+      });
+    }
   }
 
   function buildFooter() {
