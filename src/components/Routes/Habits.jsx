@@ -27,16 +27,6 @@ const URLS = {
 const value = 0.76;
 
 function Habits() {
-  const [inputData, setInputData] = useState("");
-  const [checkboxData, setCheckboxData] = useState({
-    sunday: false,
-    monday: false,
-    tuesday: false,
-    wednesday: false,
-    thursday: false,
-    friday: false,
-    saturday: false,
-  });
   const navigate = useNavigate();
 
   const {
@@ -64,28 +54,82 @@ function Habits() {
     );
   }
 
+  const [inputData, setInputData] = useState("");
+  const [checkboxData, setCheckboxData] = useState({
+    sunday: false,
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+  });
+  const [btnClick, setBtnClick] = useState(false);
+  const [cancelBtn, setCancelBtn] = useState("inactive");
+
   function buildHabits() {
     const Checkbox = ({ label, value, onChange }) => {
       return (
         <div className="checkbox">
-          <label>{label}</label>
           <input type="checkbox" checked={value} onChange={onChange} />
+          <label className="checkmark" onClick={onChange}>
+            {label}
+          </label>
         </div>
       );
     };
+
+    function enableSaveBtn() {
+      return inputData.length > 0 &&
+        (checkboxData.sunday ||
+          checkboxData.monday ||
+          checkboxData.tuesday ||
+          checkboxData.wednesday ||
+          checkboxData.thursday ||
+          checkboxData.friday ||
+          checkboxData.saturday)
+        ? ""
+        : "disabled";
+    }
+
+    function enableCreateBtn() {
+      return btnClick ? "add-habit-btn clicked" : "add-habit-btn";
+    }
+
+    if (btnClick && cancelBtn === "clicked") {
+      setBtnClick(false);
+      setCancelBtn("inactive");
+      setInputData("");
+      setCheckboxData({
+        sunday: false,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
+      });
+    }
 
     return (
       <>
         <section className="my-habits">
           <p>Meus Hábitos</p>
-          <div className="add-habit-btn">
+          <div
+            className={enableCreateBtn()}
+            onClick={(e) => {
+              setBtnClick(true);
+              setCancelBtn("active");
+            }}
+          >
             <ion-icon name="add-outline"></ion-icon>
           </div>
         </section>
-        <article className="habit">
+        <article className={btnClick ? "habit" : "habit collapsed"}>
           <InputGroup className="habit__name">
             <input
               type="text"
+              autoComplete="off"
               value={inputData || ""}
               name="name"
               onChange={(e) => setInputData(e.target.value)}
@@ -182,8 +226,12 @@ function Habits() {
             />
           </div>
           <div className="btn-container">
-            <button id="cancel-btn">Cancelar</button>
-            <button id="save-btn">Salvar</button>
+            <button id="cancel-btn" onClick={(e) => setCancelBtn("clicked")}>
+              Cancelar
+            </button>
+            <button id="save-btn" className={enableSaveBtn()}>
+              Salvar
+            </button>
           </div>
         </article>
         <p className="no-habits-alert">

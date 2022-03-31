@@ -24,6 +24,7 @@ const Footer = styled.footer`
     padding: 0 36px;
     height: 70px;
     width: 100%;
+    user-select: none;
 
     font-size: 1.2em;
     font-weight: 300;
@@ -40,6 +41,7 @@ const Footer = styled.footer`
     bottom: 20px;
     margin: 0 auto;
     text-align: center;
+    user-select: none;
 
     width: 100px;
     height: 100px;

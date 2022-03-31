@@ -18,6 +18,7 @@ const Header = styled.header`
   color: white;
   font-family: ${(props) => props.theme.fonts.logotype};
 
+  user-select: none;
   background-color: ${(props) => props.theme.colors.primary};
   box-shadow: 2px 5px 7px 0px rgba(0, 0, 0, 0.2);
 

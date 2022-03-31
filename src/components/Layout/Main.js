@@ -24,7 +24,10 @@ const Main = styled.main`
     width: 100%;
 
     p {
+      padding-bottom: 4px;
+      align-self: flex-end;
       font-size: 1.3em;
+      user-select: none;
     }
     .add-habit-btn {
       position: relative;
@@ -51,24 +54,30 @@ const Main = styled.main`
         0px;
       transition: all 300ms ease-in-out 0s;
 
-      &.selected {
-        left: 0px;
-        top: 3px;
-
-        background-color: ${(props) => props.theme.colors.tertiary};
-        box-shadow: transparent 0px 0px 0px 0px;
-      }
       ion-icon {
         font-size: 1.9em;
         --ionicon-stroke-width: 60px;
+        pointer-events: none;
+      }
+      &.clicked {
+        left: 0px;
+        top: 3px;
+
+        cursor: default;
+        background-color: ${(props) => props.theme.colors.tertiary};
+        box-shadow: transparent 0px 0px 0px 0px;
       }
     }
   }
   .habit {
+    position: relative;
+    left: 0px;
+    top: 0px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 
     padding: 18px;
     height: 180px;
@@ -76,7 +85,19 @@ const Main = styled.main`
 
     border-radius: 10px;
     background-color: white;
+    box-shadow: lightgrey 5px 5px 0px 0px;
+    transition: all 250ms ease-out 0s;
 
+    &.collapsed {
+      height: 0;
+      left: 5px;
+      top: 5px;
+      background-color: transparent;
+      box-shadow: transparent 0px 0px 0px 0px;
+      * {
+        display: none;
+      }
+    }
     &__name {
       display: flex;
       flex-direction: column;
@@ -85,6 +106,7 @@ const Main = styled.main`
 
       height: 55px;
       width: 100%;
+      user-select: none;
 
       input {
         font-size: 1.2em;
@@ -106,24 +128,37 @@ const Main = styled.main`
     }
     .checkbox {
       position: relative;
+      height: 30px;
+      width: 30px;
+      user-select: none;
 
       input {
-        height: 30px;
-        width: 30px;
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
       }
       label {
         position: absolute;
-        top: 7px;
         left: 0;
         right: 0;
         margin: 0 auto;
 
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        gap: 5px;
 
-        pointer-events: none;
+        height: 32px;
+        width: 32px;
+
+        cursor: pointer;
+        border: 1px solid lightgrey;
+        border-radius: 50%;
+        background-color: transparent;
+      }
+      input:checked ~ .checkmark {
+        background-color: lightgrey;
       }
     }
     .btn-container {
@@ -137,11 +172,13 @@ const Main = styled.main`
         align-self: center;
         margin-top: 20px;
 
-        font-size: 1em;
+        color: grey;
+        font-size: 0.9em;
         letter-spacing: 3px;
         text-align: center;
         text-transform: uppercase;
 
+        user-select: none;
         cursor: pointer;
         border-style: none;
         background-color: inherit;
@@ -149,16 +186,20 @@ const Main = styled.main`
       }
       #save-btn {
         align-self: center;
-        margin-top: 20px;
+        margin-top: 15px;
+        padding: 6px 15px;
 
+        color: white;
         font-size: 1.1em;
         letter-spacing: 3px;
         text-align: center;
         text-transform: uppercase;
 
+        user-select: none;
         cursor: pointer;
         border-style: none;
-        background-color: inherit;
+        border-radius: 5px;
+        background-color: ${(props) => props.theme.colors.primary};
         transition: all 200ms ease-in-out 0s;
       }
     }
@@ -166,6 +207,8 @@ const Main = styled.main`
   .no-habits-alert {
     display: flex;
     align-items: flex-start;
+
+    user-select: none;
 
     font-size: 1.1em;
     line-height: 1.2em;
