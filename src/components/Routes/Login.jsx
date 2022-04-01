@@ -40,7 +40,7 @@ function Login() {
       setUser(response.data);
       setToken(response.data.token);
 
-      navigate("/habits");
+      navigate("/today");
     });
     promise.catch((error) => console.log(error.response));
   }

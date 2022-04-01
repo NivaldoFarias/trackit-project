@@ -8,8 +8,9 @@ import HabitsContext from "../../hooks/HabitsContext";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 import Login from "./Login";
+import SignUp from "./Singup";
+import Today from "./Today";
 import Habits from "./Habits";
-import SignUp from "./Singup.jsx";
 
 export default function Wrapper() {
   const [token, setToken] = useLocalStorage("token", "");
@@ -26,6 +27,7 @@ export default function Wrapper() {
                 <Route path="/" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/habits" element={<Habits />} />
+                <Route path="/today" element={<Today />} />
               </Routes>
             </BrowserRouter>
           </UserContext.Provider>
@@ -44,6 +46,12 @@ const theme = {
     altTertiary: "rgb(253, 235, 220)",
     barPrimary: "rgb(82, 100, 174)",
     btnShadowColor: "rgb(56, 42, 138)",
+    darkGreen: "rgb(163,216,150)",
+    regularGreen: "rgb(193,226,190)",
+    lightGreen: "rgb(214,235,195)",
+    lighterGreen: "rgb(230,248,209)",
+    btnGreen: "rgb(118,185,71)",
+    btnShadowGreen: "rgb(77,152,51)",
   },
   fonts: {
     primary: "Lexend Deca, sans-serif",
