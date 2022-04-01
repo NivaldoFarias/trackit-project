@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import TokenContext from "../../hooks/TokenContext";
@@ -27,7 +27,7 @@ const URLS = {
 };
 
 function Habits() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const { token } = useContext(TokenContext);
   const { setHabitsData } = useContext(HabitsContext);
   const CONFIG = {
