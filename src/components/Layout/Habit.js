@@ -12,13 +12,16 @@ const StyledHabit = styled.article`
 
   padding: 18px 18px 10px;
   min-height: 120px;
-  width: 340px;
+  width: 350px;
 
   border-radius: 10px;
   background-color: white;
   box-shadow: lightgrey 5px 5px 0px 0px;
   transition: all 250ms ease-out 0s;
 
+  * {
+    user-select: none;
+  }
   .habit__name {
     display: flex;
     justify-content: space-between;

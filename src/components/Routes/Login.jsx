@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
 import axios from "axios";
 
 import UserContext from "../../hooks/UserContext";
@@ -31,7 +32,9 @@ function Login() {
   }, []);
 
   const validateLogin =
-    loginData.email?.length > 0 && loginData.password?.length > 0
+    loginData.email?.length > 0 &&
+    loginData.password?.length > 0 &&
+    !hasSubmitted
       ? validateEmail(loginData.email)
       : "disabled";
 
@@ -51,7 +54,15 @@ function Login() {
       navigate("/today");
     });
     promise.catch((error) => {
-      alert(error.response.data.message);
+      confirmAlert({
+        message: `${error.response.data.message} Por favor, tente novamente.`,
+        buttons: [
+          {
+            label: "OK",
+            onClick: () => null,
+          },
+        ],
+      });
       resetAll();
     });
   }
@@ -85,6 +96,7 @@ function Login() {
       >
         <InputGroup>
           <input
+            className={hasSubmitted ? "disabled" : ""}
             type="text"
             value={loginData.email}
             name="email"
@@ -97,6 +109,7 @@ function Login() {
         </InputGroup>
         <InputGroup>
           <input
+            className={hasSubmitted ? "disabled" : ""}
             type="password"
             value={loginData.password}
             name="password"

@@ -12,6 +12,9 @@ const Container = styled.div`
 
   background-color: ${(props) => props.theme.colors.altTertiary};
 
+  * {
+    user-select: none;
+  }
   figure {
     display: flex;
     flex-direction: column;
@@ -61,6 +64,9 @@ const Container = styled.div`
 
       &:hover {
         filter: brightness(1.3);
+      }
+      * {
+        pointer-events: none;
       }
     }
   }

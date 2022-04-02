@@ -32,9 +32,9 @@ const TodayHabits = styled.main`
 
     svg {
       position: absolute;
-      top: 0;
+      top: 5px;
       right: 0;
-      font-size: 1.8em;
+      font-size: 3em;
     }
     &__title {
       font-size: 1.5em;
@@ -67,7 +67,7 @@ const TodayHabits = styled.main`
 
     padding: 15px;
     height: 120px;
-    width: 340px;
+    width: 350px;
 
     border-radius: 10px;
     background-color: white;
@@ -76,10 +76,10 @@ const TodayHabits = styled.main`
 
     .split-bar {
       position: absolute;
-      top: 54px;
-      left: 7px;
+      top: 52px;
+      left: 10px;
 
-      width: 222px;
+      width: 242px;
 
       border: 1px solid rgba(0, 0, 0, 0.03);
     }

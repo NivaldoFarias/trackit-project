@@ -5,7 +5,7 @@ import axios from "axios";
 import TokenContext from "../../hooks/TokenContext";
 import HabitsContext from "../../hooks/HabitsContext";
 
-import Main from "./../Layout/Main.js";
+import Main from "../Layout/MyHabits.js";
 import InputGroup from "../Layout/InputGroup.js";
 import LoadingDots from "./../Layout/LoadingDots.js";
 
@@ -101,7 +101,7 @@ function Habits() {
             <input
               type="text"
               autoComplete="off"
-              maxLength={25}
+              maxLength={18}
               value={inputData || ""}
               name="name"
               onChange={(e) => setInputData(e.target.value)}
