@@ -5,10 +5,10 @@ const TodayHabits = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
 
   padding: 101px 18px;
-  height: calc(100% - 80px);
+  height: 100%;
   width: 100vw;
 
   font-weight: 300;
@@ -32,16 +32,19 @@ const TodayHabits = styled.main`
 
     svg {
       position: absolute;
-      top: 3px;
+      top: 0;
       right: 0;
-      font-size: 2.5em;
+      font-size: 1.8em;
     }
     &__title {
       font-size: 1.5em;
     }
     &__habits-info {
-      font-size: 1em;
-      filter: opacity(0.5);
+      width: 86%;
+
+      font-size: 0.95em;
+      line-height: 1.2em;
+      filter: opacity(0.6);
     }
   }
   .habits {
@@ -64,24 +67,46 @@ const TodayHabits = styled.main`
 
     padding: 15px;
     height: 120px;
-    width: 100%;
+    width: 340px;
 
     border-radius: 10px;
     background-color: white;
     box-shadow: lightgrey 5px 5px 0px 0px;
     transition: all 250ms ease-out 0s;
 
+    .split-bar {
+      position: absolute;
+      top: 54px;
+      left: 7px;
+
+      width: 222px;
+
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
     &__info {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: center;
       align-items: flex-start;
+      gap: 25px;
 
       height: 100%;
       width: fit-content;
 
       &__name {
         font-size: 1.4em;
+      }
+      &__streaks {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+
+        font-size: 0.95em;
+        filter: opacity(0.8);
+      }
+      span.green-text {
+        color: ${(props) => props.theme.colors.btnShadowGreen};
       }
     }
     &__checkbox {

@@ -11,8 +11,8 @@ const StyledHabit = styled.article`
   gap: 15px;
 
   padding: 18px 18px 10px;
-  height: 120px;
-  width: 100%;
+  min-height: 120px;
+  width: 340px;
 
   border-radius: 10px;
   background-color: white;
@@ -33,7 +33,7 @@ const StyledHabit = styled.article`
       position: absolute;
       top: 8px;
       right: 8px;
-      > svg {
+      * {
         cursor: pointer;
         font-size: 1.2em;
       }

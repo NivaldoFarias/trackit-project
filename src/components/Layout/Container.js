@@ -44,6 +44,10 @@ const Container = styled.div`
     height: fit-content;
 
     button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
       width: 300px;
       height: 50px;
 

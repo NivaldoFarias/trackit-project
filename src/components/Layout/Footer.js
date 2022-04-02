@@ -11,7 +11,7 @@ const StyledFooter = styled.footer`
   justify-content: center;
   align-items: flex-start;
 
-  height: 100px;
+  height: min-content;
   width: 100vw;
 
   background-color: ${(props) => props.theme.colors.altTertiary};
@@ -21,8 +21,8 @@ const StyledFooter = styled.footer`
     justify-content: space-between;
     align-items: center;
 
-    padding: 0 36px;
-    height: 70px;
+    padding: 0 31px 10px 36px;
+    height: 80px;
     width: 100%;
     user-select: none;
 
@@ -33,6 +33,10 @@ const StyledFooter = styled.footer`
 
     box-shadow: 2px -3px 7px 0px rgba(0, 0, 0, 0.15);
     background-color: white;
+
+    > * {
+      cursor: pointer;
+    }
   }
   .progressbar-container {
     position: absolute;
@@ -41,10 +45,13 @@ const StyledFooter = styled.footer`
     bottom: 20px;
 
     margin: 0 auto;
-    width: 100px;
-    height: 100px;
+    width: 95px;
+    height: 95px;
 
     user-select: none;
+    * {
+      cursor: pointer;
+    }
   }
 `;
 

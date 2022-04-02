@@ -7,9 +7,11 @@ const Main = styled.main`
   align-items: center;
   gap: 20px;
 
-  padding: 101px 18px;
-  height: calc(100% - 80px);
+  padding: 100px 18px 120px;
+  height: 100%;
   width: 100vw;
+
+  overflow-y: scroll;
 
   font-weight: 300;
   font-family: ${(props) => props.theme.fonts.primary};
@@ -17,16 +19,17 @@ const Main = styled.main`
   color: ${(props) => props.theme.colors.primary};
 
   .my-habits {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: fit-content;
-    width: 100%;
+    width: 340px;
 
     p {
-      padding-bottom: 4px;
+      padding-bottom: 1px;
       align-self: flex-end;
-      font-size: 1.3em;
+      font-size: 1.6em;
       user-select: none;
     }
     .add-habit-btn {
@@ -81,7 +84,7 @@ const Main = styled.main`
 
     padding: 18px;
     height: 180px;
-    width: 100%;
+    width: 340px;
 
     border-radius: 10px;
     background-color: white;
@@ -224,6 +227,15 @@ const Main = styled.main`
     line-height: 1.2em;
     font-family: "Lexend Deca", sans-serif;
     color: ${(props) => props.theme.colors.primary};
+  }
+  .split-bar {
+    position: absolute;
+    top: 40px;
+    left: -3px;
+
+    width: 280px;
+
+    border: 1px solid rgba(0, 0, 0, 0.03);
   }
 `;
 

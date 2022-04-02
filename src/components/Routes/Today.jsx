@@ -4,26 +4,25 @@ import dayjs from "dayjs";
 import * as weekday from "dayjs/plugin/weekday";
 import * as isLeapYear from "dayjs/plugin/isLeapYear";
 
-import { BsCalendarEventFill } from "react-icons/bs";
+import checkDoneHabits from "./../../utils/checkDoneHabits";
 
-import TokenContext from "../../hooks/TokenContext";
-import HabitsContext from "../../hooks/HabitsContext";
+import { BsCalendar4Event } from "react-icons/bs";
 
 import TodayHabits from "./../Layout/TodayHabits";
-import LoadingDots from "./../Layout/LoadingDots.js";
+import TokenContext from "../../hooks/TokenContext";
+import TodayHabitsContext from "./../../hooks/TodayHabitsContext";
+import ProgressContext from "../../hooks/ProgressContext";
 
 import Header from "./Header";
 import Footer from "./Footer";
 import TodayHabit from "./TodayHabit";
 
 function Today() {
+  const [reloadList, setReloadList] = useState(false);
+  const { progress, setProgress } = useContext(ProgressContext);
   const { token } = useContext(TokenContext);
-  const { habitsData } = useContext(HabitsContext);
-  const CONFIG = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+  const { todayHabitsData, setTodayHabitsData } =
+    useContext(TodayHabitsContext);
 
   dayjs.locale("pt-br");
   dayjs.extend(isLeapYear);
@@ -39,20 +38,67 @@ function Today() {
     [5, "Sexta"],
     [6, "Sábado"],
   ]);
+  const CONFIG = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
-  console.log(habitsData);
+  useEffect(() => {
+    const URL =
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
+    const request = axios.get(URL, CONFIG);
+
+    request.then((response) => {
+      if (response.data.length > 0) setTodayHabitsData(response.data);
+    });
+    request.catch((error) => console.log(error.response));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reloadList]);
+
+  useEffect(() => {
+    setProgress(checkDoneHabits(todayHabitsData));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [todayHabitsData]);
+
+  function updateDoneHabits(id, type) {
+    if (type === "check" || type === "uncheck") {
+      const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${type}`;
+
+      const request = axios.post(URL, null, CONFIG);
+      request.then(() => {
+        setReloadList(!reloadList);
+      });
+      request.catch((error) => console.log(error.response));
+    } else {
+      console.log("Não foi possível atualizar o hábito");
+    }
+  }
 
   function buildMain() {
+    const info =
+      progress === 1
+        ? "Parabéns!! Você concluiu todos seus hábitos de hoje 🎉"
+        : `${(progress * 100).toFixed(2)}% concluído! Continue assim 💪`;
+
     return (
       <>
         <section className="date">
           <p className="date__title">{`${days.get(day)}, ${date}`}</p>
-          <p className="date__habits-info">Nenhum hábito concluído ainda</p>
-          <BsCalendarEventFill />
+          <p className="date__habits-info">
+            {progress ? info : "Nenhum hábito concluído ainda"}
+          </p>
+          <BsCalendar4Event />
         </section>
         <section className="habits">
-          {habitsData.map((habit) => {
-            return <TodayHabit key={habit.id} habit={habit} />;
+          {todayHabitsData?.map((habit) => {
+            return (
+              <TodayHabit
+                key={habit.id}
+                habit={habit}
+                updateHabit={updateDoneHabits}
+              />
+            );
           })}
         </section>
       </>

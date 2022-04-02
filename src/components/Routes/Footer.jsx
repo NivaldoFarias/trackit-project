@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useNavigate } from "react-router-dom";
 import StyledFooter from "../Layout/Footer";
 
-function Footer() {
-  const value = 0.66;
+import ProgressContext from "../../hooks/ProgressContext";
 
+function Footer() {
+  const { progress } = useContext(ProgressContext);
+  const navigate = useNavigate();
   return (
     <StyledFooter>
       <div className="text-container">
-        <p>Hábitos</p>
-        <p>Histórico</p>
+        <p id="habits-page-btn" onClick={() => navigate("/habits")}>
+          Hábitos
+        </p>
+        <p id="history-page-btn" onClick={() => navigate("/history")}>
+          Histórico
+        </p>
       </div>
-      <div className="progressbar-container">
+      <div className="progressbar-container" onClick={() => navigate("/today")}>
         <CircularProgressbar
-          value={value}
+          value={progress}
           text={`Hoje`}
           maxValue={1}
           strokeWidth={5}

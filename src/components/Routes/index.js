@@ -2,37 +2,52 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import UserContext from "../../hooks/UserContext";
 import TokenContext from "../../hooks/TokenContext";
 import HabitsContext from "../../hooks/HabitsContext";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import TodayHabitsContext from "../../hooks/TodayHabitsContext";
+import ProgressContext from "../../hooks/ProgressContext";
 
 import Login from "./Login";
 import SignUp from "./Singup";
 import Today from "./Today";
 import Habits from "./Habits";
+import History from "./History";
 
 export default function Wrapper() {
   const [token, setToken] = useLocalStorage("token", "");
   const [user, setUser] = useLocalStorage("user", null);
   const [habitsData, setHabitsData] = useLocalStorage("habitsData", null);
+  const [todayHabitsData, setTodayHabitsData] = useLocalStorage(
+    "todayHabitsData",
+    null
+  );
+  const [progress, setProgress] = useLocalStorage("progress", 0);
 
   return (
     <ThemeProvider theme={theme}>
-      <HabitsContext.Provider value={{ habitsData, setHabitsData }}>
-        <TokenContext.Provider value={{ token, setToken }}>
-          <UserContext.Provider value={{ user, setUser }}>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/habits" element={<Habits />} />
-                <Route path="/today" element={<Today />} />
-              </Routes>
-            </BrowserRouter>
-          </UserContext.Provider>
-        </TokenContext.Provider>
-      </HabitsContext.Provider>
+      <ProgressContext.Provider value={{ progress, setProgress }}>
+        <TodayHabitsContext.Provider
+          value={{ todayHabitsData, setTodayHabitsData }}
+        >
+          <HabitsContext.Provider value={{ habitsData, setHabitsData }}>
+            <TokenContext.Provider value={{ token, setToken }}>
+              <UserContext.Provider value={{ user, setUser }}>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/habits" element={<Habits />} />
+                    <Route path="/today" element={<Today />} />
+                    <Route path="/history" element={<History />} />
+                  </Routes>
+                </BrowserRouter>
+              </UserContext.Provider>
+            </TokenContext.Provider>
+          </HabitsContext.Provider>
+        </TodayHabitsContext.Provider>
+      </ProgressContext.Provider>
     </ThemeProvider>
   );
 }

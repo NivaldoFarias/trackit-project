@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -9,25 +9,33 @@ import logo from "./../../assets/images/logo.png";
 import Container from "../Layout/Container.js";
 import StyledLink from "./../Layout/StyledLink.js";
 import InputGroup from "../Layout/InputGroup.js";
+import LoadingDots from "./../Layout/LoadingDots.js";
+
+import getRandomInt from "../../utils/getRandomInt.js";
 
 function Login() {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
-  const { setUser } = useContext(UserContext);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const { user, setUser } = useContext(UserContext);
   const { setToken } = useContext(TokenContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user !== null) {
+      navigate("/today");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const validateLogin =
     loginData.email?.length > 0 && loginData.password?.length > 0
       ? validateEmail(loginData.email)
       : "disabled";
 
-  function handleLogin(e) {
-    e.preventDefault();
-    console.log(loginData.email, loginData.password);
-
+  function handleLogin() {
     const promise = axios.post(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
       {
@@ -55,7 +63,15 @@ function Login() {
         <img src={logo} alt="logo" />
         <figcaption>TrackIt</figcaption>
       </figure>
-      <form onSubmit={handleLogin}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setHasSubmitted(true);
+          setTimeout(() => {
+            handleLogin();
+          }, getRandomInt(750, 2000));
+        }}
+      >
         <InputGroup>
           <input
             type="text"
@@ -81,7 +97,10 @@ function Login() {
           <label>Senha</label>
         </InputGroup>
         <button className={validateLogin} type="submit">
-          Entrar
+          <p className={hasSubmitted ? "hidden" : ""}>Entrar</p>
+          <LoadingDots
+            className={hasSubmitted ? "dot-pulse" : "dot-pulse hidden"}
+          ></LoadingDots>
         </button>
         <StyledLink to="/signup">Não possui uma conta? Cadastre-se</StyledLink>
       </form>

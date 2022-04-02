@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import { MdDelete } from "react-icons/md";
 import { IoSunnyOutline, IoSunny } from "react-icons/io5";
 import axios from "axios";
@@ -17,17 +19,6 @@ function Habit({ habit }) {
   };
 
   function deleteHabit(habit) {
-    if (
-      parseInt(
-        prompt(
-          "Tem certeza que deseja excluir essa atividade? 1 = SIM | 0 = CANCELAR \n\n" +
-            habit.name
-        )
-      )
-    ) {
-      return null;
-    }
-
     const newHabits = habitsData.filter((item) => item.id !== habit.id);
     setHabitsData(newHabits);
 
@@ -45,7 +36,24 @@ function Habit({ habit }) {
     <StyledHabit className="habit">
       <div className="habit__name">
         <h3>{habit.name}</h3>
-        <span className="habit__delete" onClick={() => deleteHabit(habit)}>
+        <span
+          className="habit__delete"
+          onClick={() => {
+            confirmAlert({
+              message: `Você tem certeza que deseja deletar este hábito: ${habit.name}?`,
+              buttons: [
+                {
+                  label: "Sim",
+                  onClick: () => deleteHabit(habit),
+                },
+                {
+                  label: "Cancelar",
+                  onClick: () => null,
+                },
+              ],
+            });
+          }}
+        >
           <MdDelete />
         </span>
       </div>

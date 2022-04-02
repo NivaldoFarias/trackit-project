@@ -10,6 +10,7 @@ import InputGroup from "../Layout/InputGroup.js";
 import LoadingDots from "./../Layout/LoadingDots.js";
 
 import objToArr from "../../utils/objToArr.js";
+import getRandomInt from "../../utils/getRandomInt.js";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -56,7 +57,6 @@ function Habits() {
 
     request.then((response) => {
       if (response.data.length > 0) setHabitsData(response.data);
-      console.log(response.data);
     });
     request.catch((error) => console.log(error.response));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,7 +65,7 @@ function Habits() {
   function buildHabits() {
     const Checkbox = ({ label, value, onChange }) => {
       return (
-        <div className="checkbox">
+        <div className={saveHabitBtn ? "checkbox disabled" : "checkbox"}>
           <input type="checkbox" checked={value} onChange={onChange} />
           <label className="checkmark" onClick={onChange}>
             {label}
@@ -75,7 +75,9 @@ function Habits() {
     };
 
     if (btnClick && cancelBtn === "clicked") {
-      resetAll();
+      setBtnClick(false);
+      setCancelBtn("inactive");
+      setSaveHabitBtn(false);
     }
 
     return (
@@ -196,16 +198,27 @@ function Habits() {
             />
           </div>
           <div className="btn-container">
-            <button id="cancel-btn" onClick={(e) => setCancelBtn("clicked")}>
+            <button
+              id="cancel-btn"
+              className={saveHabitBtn ? "disabled" : ""}
+              onClick={(e) => setCancelBtn("clicked")}
+            >
               Cancelar
             </button>
             <button
               id="save-btn"
               className={enableSaveBtn()}
-              onClick={handleSaveHabit}
+              onClick={() => {
+                setSaveHabitBtn(!saveHabitBtn);
+                setTimeout(() => {
+                  handleSaveHabit();
+                }, getRandomInt(750, 2000));
+              }}
             >
-              <p>Salvar</p>
-              <LoadingDots className="dot-pulse hidden"></LoadingDots>
+              <p className={saveHabitBtn ? "hidden" : ""}>Salvar</p>
+              <LoadingDots
+                className={saveHabitBtn ? "dot-pulse" : "dot-pulse hidden"}
+              ></LoadingDots>
             </button>
           </div>
         </article>
@@ -231,15 +244,8 @@ function Habits() {
     }
 
     function handleSaveHabit() {
-      setSaveHabitBtn(!saveHabitBtn);
       resetAll();
       handlePostHabit();
-      console.log({
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: { name: inputData, days: objToArr(checkboxData) },
-      });
     }
 
     function handlePostHabit() {
@@ -247,14 +253,14 @@ function Habits() {
 
       const request = axios.post(URLS.POST_CREATE_HABIT, body, CONFIG);
 
-      request.then((response) => {
-        console.log(response);
+      request.then(() => {
         setReloadList(!reloadList);
       });
       request.catch((error) => console.log(error.response));
     }
 
     function resetAll() {
+      setSaveHabitBtn(false);
       setBtnClick(false);
       setCancelBtn("inactive");
       setInputData("");
