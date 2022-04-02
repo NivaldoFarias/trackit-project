@@ -24,10 +24,10 @@ const Main = styled.main`
     justify-content: space-between;
     align-items: center;
     height: fit-content;
-    width: 340px;
+    width: 350px;
 
     p {
-      padding-bottom: 1px;
+      padding-bottom: 2px;
       align-self: flex-end;
       font-size: 1.6em;
       user-select: none;
@@ -41,8 +41,8 @@ const Main = styled.main`
       justify-content: center;
       align-items: center;
 
-      height: 36px;
-      width: 36px;
+      height: 40px;
+      width: 40px;
 
       font-size: 0.77em;
       font-weight: 300;

@@ -14,7 +14,7 @@ const StyledHeader = styled.header`
   height: 80px;
   width: 100vw;
 
-  font-size: 2.8em;
+  font-size: 3.1em;
   color: white;
   font-family: ${(props) => props.theme.fonts.logotype};
 
@@ -22,7 +22,20 @@ const StyledHeader = styled.header`
   background-color: ${(props) => props.theme.colors.primary};
   box-shadow: 2px 5px 7px 0px rgba(0, 0, 0, 0.2);
 
-  img {
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      position: absolute;
+      top: 16px;
+      left: 126px;
+
+      width: 16px;
+    }
+  }
+  > img {
     width: 53px;
     border-radius: 50%;
     border: 2px solid white;

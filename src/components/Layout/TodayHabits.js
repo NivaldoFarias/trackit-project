@@ -28,7 +28,7 @@ const TodayHabits = styled.main`
     gap: 10px;
 
     height: fit-content;
-    width: 100%;
+    width: 350px;
 
     svg {
       position: absolute;
@@ -40,7 +40,7 @@ const TodayHabits = styled.main`
       font-size: 1.5em;
     }
     &__habits-info {
-      width: 86%;
+      width: 83%;
 
       font-size: 0.95em;
       line-height: 1.2em;
