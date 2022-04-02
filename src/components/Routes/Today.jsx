@@ -79,7 +79,7 @@ function Today() {
     const info =
       progress === 1
         ? "Parabéns!! Você concluiu todos seus hábitos de hoje 🎉"
-        : `${(progress * 100).toFixed(2)}% concluído! Continue assim 💪`;
+        : `${(progress * 100).toFixed(0)}% concluído! Continue assim 💪`;
 
     return (
       <>
