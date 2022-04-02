@@ -26,7 +26,7 @@ const StyledFooter = styled.footer`
     width: 100%;
     user-select: none;
 
-    font-size: 1.2em;
+    font-size: 1.25em;
     font-weight: 300;
     font-family: "Lexend Deca", cursive;
     color: ${(props) => props.theme.colors.primary};

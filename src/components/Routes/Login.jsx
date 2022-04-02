@@ -50,11 +50,22 @@ function Login() {
 
       navigate("/today");
     });
-    promise.catch((error) => console.log(error.response));
+    promise.catch((error) => {
+      alert(error.response.data.message);
+      resetAll();
+    });
   }
 
   function handleInputChange(e) {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
+  }
+
+  function resetAll() {
+    setHasSubmitted(false);
+    setLoginData({
+      email: "",
+      password: "",
+    });
   }
 
   return (
