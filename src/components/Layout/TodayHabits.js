@@ -121,7 +121,6 @@ const TodayHabits = styled.main`
       height: 75px;
       width: 75px;
 
-      cursor: pointer;
       border-radius: 50%;
       border: 1px solid ${(props) => props.theme.colors.regularGreen};
       background-color: ${(props) => props.theme.colors.lighterGreen};
@@ -132,6 +131,9 @@ const TodayHabits = styled.main`
         cursor: pointer;
         color: white;
         font-size: 2.8em;
+      }
+      &:hover {
+        cursor: pointer;
       }
       &.clicked {
         left: 2px;

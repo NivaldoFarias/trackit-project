@@ -24,7 +24,6 @@ const StyledFooter = styled.footer`
     padding: 0 31px 10px 36px;
     height: 80px;
     width: 100%;
-    user-select: none;
 
     font-size: 1.25em;
     font-weight: 300;
@@ -35,7 +34,11 @@ const StyledFooter = styled.footer`
     background-color: white;
 
     > * {
-      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
   .progressbar-container {

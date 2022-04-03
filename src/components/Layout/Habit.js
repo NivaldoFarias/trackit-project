@@ -36,9 +36,12 @@ const StyledHabit = styled.article`
       position: absolute;
       top: 8px;
       right: 8px;
+
       * {
-        cursor: pointer;
         font-size: 1.2em;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+
 import axios from "axios";
 import dayjs from "dayjs";
 import * as weekday from "dayjs/plugin/weekday";
@@ -10,6 +11,7 @@ import { BsCalendar4Event } from "react-icons/bs";
 
 import TodayHabits from "./../Layout/TodayHabits";
 import TokenContext from "../../hooks/TokenContext";
+import HabitsContext from "../../hooks/HabitsContext";
 import TodayHabitsContext from "./../../hooks/TodayHabitsContext";
 import ProgressContext from "../../hooks/ProgressContext";
 
@@ -21,6 +23,7 @@ function Today() {
   const [reloadList, setReloadList] = useState(false);
   const { progress, setProgress } = useContext(ProgressContext);
   const { token } = useContext(TokenContext);
+  const { habitsData } = useContext(HabitsContext);
   const { todayHabitsData, setTodayHabitsData } =
     useContext(TodayHabitsContext);
 
@@ -54,7 +57,7 @@ function Today() {
     });
     request.catch((error) => console.log(error.response));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reloadList]);
+  }, [reloadList, habitsData]);
 
   useEffect(() => {
     setProgress(checkDoneHabits(todayHabitsData));

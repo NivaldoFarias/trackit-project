@@ -48,8 +48,6 @@ const Main = styled.main`
       font-weight: 300;
       color: white;
 
-      cursor: pointer;
-
       border-radius: 50%;
       border: 1px solid ${(props) => props.theme.colors.primary};
       background-color: ${(props) => props.theme.colors.secondary};
@@ -57,6 +55,9 @@ const Main = styled.main`
         0px;
       transition: all 300ms ease-in-out 0s;
 
+      &:hover {
+        cursor: pointer;
+      }
       ion-icon {
         font-size: 1.9em;
         --ionicon-stroke-width: 60px;

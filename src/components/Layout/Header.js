@@ -36,6 +36,7 @@ const StyledHeader = styled.header`
     }
   }
   > img {
+    height: auto;
     width: 53px;
     border-radius: 50%;
     border: 2px solid white;
