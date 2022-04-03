@@ -36,8 +36,10 @@ const StyledHeader = styled.header`
     }
   }
   > img {
-    height: auto;
     width: 53px;
+    height: 53px;
+    object-fit: cover;
+    object-position: center;
     border-radius: 50%;
     border: 2px solid white;
   }
