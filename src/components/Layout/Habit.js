@@ -80,6 +80,9 @@ const StyledHabit = styled.article`
 
     border: 1px solid rgba(0, 0, 0, 0.03);
   }
+  @media screen and (min-width: 375px) {
+    width: 330px;
+  }
 `;
 
 export default StyledHabit;

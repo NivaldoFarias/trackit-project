@@ -8,8 +8,8 @@ const TodayHabits = styled.main`
   gap: 20px;
 
   padding: 101px 18px;
-  height: 100%;
-  width: 100vw;
+  min-height: 100%;
+  width: 100%;
 
   font-weight: 300;
   font-family: ${(props) => props.theme.fonts.primary};
@@ -28,7 +28,7 @@ const TodayHabits = styled.main`
     gap: 10px;
 
     height: fit-content;
-    width: 350px;
+    width: 340px;
 
     svg {
       position: absolute;
@@ -53,7 +53,7 @@ const TodayHabits = styled.main`
     align-items: center;
     gap: 15px;
 
-    height: 100%;
+    min-height: 100%;
     width: 100%;
   }
   .habit {
@@ -142,6 +142,13 @@ const TodayHabits = styled.main`
         border: 1px solid ${(props) => props.theme.colors.btnShadowGreen};
         background-color: ${(props) => props.theme.colors.btnGreen};
         box-shadow: transparent 0px 0px 0px 0px;
+      }
+    }
+
+    @media screen and (max-width: 375px) {
+      width: 330px;
+      .split-bar {
+        width: 220px;
       }
     }
   }

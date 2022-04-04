@@ -8,7 +8,7 @@ const StyledHistory = styled.main`
   gap: 20px;
 
   padding: 101px 18px;
-  height: 100%;
+  min-height: 100%;
   width: 100vw;
 
   font-weight: 300;

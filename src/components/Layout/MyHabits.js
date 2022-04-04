@@ -8,10 +8,8 @@ const Main = styled.main`
   gap: 20px;
 
   padding: 100px 18px 120px;
-  height: 100%;
+  min-height: 100%;
   width: 100vw;
-
-  overflow-y: scroll;
 
   font-weight: 300;
   font-family: ${(props) => props.theme.fonts.primary};
@@ -216,6 +214,9 @@ const Main = styled.main`
           pointer-events: none;
         }
       }
+    }
+    @media screen and (min-width: 375px) {
+      width: 330px;
     }
   }
   .no-habits-alert {
