@@ -84,8 +84,6 @@ function History() {
                   convertedDate ===
                   today.toLocaleDateString("pt-br", dateOptions);
 
-                console.log(filteredInfo, convertedDate, history);
-
                 return `react-calendar__tile${
                   filteredInfo.has(convertedDate) && !isToday
                     ? filteredInfo.get(convertedDate)
