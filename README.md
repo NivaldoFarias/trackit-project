@@ -14,7 +14,7 @@
     <a href="https://github.com/NivaldoFarias/projeto10-trackit/tree/main/src"><strong>Browse JSX code»</strong></a>
 </div>
 
-<!-- ![Banner](https://github.com/NivaldoFarias/projeto9-cineflex/blob/main/src/assets/cineflex-showroom.png?raw=true) -->
+![Banner](https://github.com/NivaldoFarias/projeto10-trackit/blob/main/src/assets/images/trackit-showroom.png)
 
 <!-- ABOUT THE PROJECT -->
 
