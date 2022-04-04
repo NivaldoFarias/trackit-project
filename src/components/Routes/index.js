@@ -67,6 +67,8 @@ const theme = {
     lighterGreen: "rgb(230,248,209)",
     btnGreen: "rgb(118,185,71)",
     btnShadowGreen: "rgb(77,152,51)",
+    success: "rgb(118,185,71)",
+    danger: "rgb(255,0,0)",
   },
   fonts: {
     primary: "Lexend Deca, sans-serif",
